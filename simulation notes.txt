@@ -1,0 +1,190 @@
+Carwash
+System:
+int timer
+int profit_wax
+int profit_wash
+int profit_both
+int profit_total
+int opening 
+int closing
+int station_limit
+object garage array
+object station array
+int nth_employee
+
+
+Employee:
+bool servicing
+object retool array
+object waiting array
+employee object
+
+Car
+bool servicing
+bool waiting
+int action [0-5]
+object outside array
+object garage array
+object exit array
+Car object
+
+
+*Notes:
+employee:
+Service will only be done if employee is in this state(servicing to true,retooling to false,inside waiting array,not in working array)
+Waiting will be done if(no cars in array)
+Retooling will be done if employee is done servcing current car retooling to true
+steps general:
+1. employee enters start generate random cars 1hr after opening the store
+2. generate random cars that will either wash or wax or both 
+3. check if there are employees in waiting array(first element) if not then put in waiting array(cars)
+3. make a cycle of employee working or waiting or retooling and cars that will servicing or waiting and paying
+4. 
+
+
+
+steps(employee):
+(create an employee object based on nth_employee)
+1. employee arrives at 7:00am
+(wait preset in set timeout)
+move timer +1
+2.mark employee servicing to false and put in waiting array
+ 2.1 if 12:00 mark employee servicing to false and delete in waiting array
+ 2.2 if 1:00 mark employee servicing to true and put in waiting array
+
+
+
+
+
+
+(loop)
+(do employee logic 0)
+(do cars logic)
+<employee logic1>**purpose is to set employee and car object in a valid work station 
+(loop every employee in waiting array else do <car logic> if when no employee is in array and timer+1)
+(
+(**if station array.length < limit)
+check garage array if there is a car pull it out first and put employee and car in a station array and set servicing(both) true and waiting(car) to false
+delete employee in waiting array  
+delete car in garage array 
+
+else if no cars in garage then check outside array if there is a car pull it out and put employee and car in station array and set servicing(both) true
+and waiting(car) to false
+delete employee in waiting array 
+delete car in outside array 
+
+
+(else)
+if not then remain employee to waiting array 
+
+
+(**else)
+if not then remain employee to waiting array 
+and put all cars in outside array in garage array(FIFO) if not exist and set servicing(each car) to false and waiting(each car) to true
+exit loop
+)
+(start car animation based on service of car or waiting of car inside station array)
+<end logic1>
+(timer +1)
+(put all employee in retool array to waiting array if empty just continue)
+(reloop)
+
+
+
+
+steps(car):
+(loop)
+<cars logic>
+1. if timer is greater than equal to opening+1 and timer is not greater than or equal to closing  generate random number of car object from 1-3
+ 1.1 set random action to wax(0),wash(1),or both(2)
+ 1.3 set servicing by default to false and waiting to true
+ 1.4 set them FIFO in outside array 
+(loop outside array)
+2. check if there is employee in waiting array and station array is less than the limit then put in servicing to true and waiting to false
+else put in garage array(FIFO) and set servicing to false and waiting to true
+(do employee logic1)
+
+
+
+(after one cycle)
+3. if its in servicing to true then set servicing to false  set action to exit(4)
+
+
+
+
+
+<employee logic 0>**purpose is for retool of employee and here is to generate work and payment and finish the loop
+(if timer is >= to opening+1 and timer is not >= to closing)
+	(loop for every station array *if empty then just exit loop and function)
+	(**set first the servicing(both)=false and waiting(car)=false)
+	(**put retool array for every employee inside station array)
+	(** put exit array for every car object inside station array)
+	(** process payment based on action(car) add it to profit wax or profit wash or profit_both)
+(** start animation of each car to exit based on loop on exit/station array)
+(** delete car object on exit array)
+(** delete car and employee object on station array)
+
+(else)
+**still finish remaining work and payment and this will finish the loop
+
+
+
+
+Checklist
+
+1. make a div move *done
+2. create a new dom ('div')
+3. move the newly created dom in straight line done
+4. straight then up *done
+5.straight then down *done
+6.straight and delete the object and delete the div simultaneously
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<employee logic2>
+**Note Only**(employee start working 1hr after opening of shop)
+3.if employee is not servicing a car and working array length is greater than or equal limit then set employee to waiting array 
+if employee is valid for working and () then set employee to working array
+4.employee after per car service(1 loop) retool and set onservice to false and retool to true
+(move timer hrs +1)
+5.after processing carloop set the employee in retool to false and 
+onservice (onservice true) and put in waiting array (last element)
+(end loop)
+(final)
+6. if 23:00 then stop simulation 
+7. *(generate report details)
+
+
+(else in 1)
+then stop generation of car objects
+(end loop)
